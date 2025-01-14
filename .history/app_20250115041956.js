@@ -1,5 +1,5 @@
-const CLIENT_ID = '124871870531-98tsgk4j0oi6aah4tr2mfp4qrud796qh.apps.googleusercontent.com';
-const API_KEY = 'AIzaSyBbeQynVs697WUDcC3npQH7B5D9HHpzWpU';
+const CLIENT_ID = '124871870531-98tsgk4j0oi6aah4tr2mfp4qrud796qh.apps.googleusercontent.com'; // Replace with your Google Client ID
+const API_KEY = 'AIzaSyBbeQynVs697WUDcC3npQH7B5D9HHpzWpU'; // Replace with your Google API Key
 const SCOPES = 'https://www.googleapis.com/auth/drive';
 
 document.getElementById('authorize-button').addEventListener('click', () => {
@@ -13,11 +13,7 @@ function initClient() {
     discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
     scope: SCOPES,
   }).then(() => {
-    console.log('Client initialized successfully');
-    gapi.auth2.getAuthInstance().signIn().then(listFiles).catch((signInErr) => {
-      console.error('Error during sign-in:', signInErr);
-      alert('Failed to sign in. Check console for details.');
-    });
+    gapi.auth2.getAuthInstance().signIn().then(listFiles);
   }).catch(err => {
     console.error('Error initializing client:', err);
     alert('Failed to initialize Google API. Check your credentials.');
@@ -25,7 +21,6 @@ function initClient() {
 }
 
 function listFiles() {
-  console.log('Listing files...');
   gapi.client.drive.files.list({
     pageSize: 10,
     fields: 'files(id, name)',
